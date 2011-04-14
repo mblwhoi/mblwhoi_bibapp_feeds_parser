@@ -48,6 +48,12 @@ class BibAppWorksRdfParser extends FeedsParser {
                                   'name' => t('Volume'),
                                   'description' => t('Volume'),
                                   ),
+
+                 'authors_list' => array(
+                                  'name' => t('Authors List'),
+                                  'description' => t('Authors List'),
+                                  ),
+
                  'rft.issue' => array(
                                   'name' => t('Issue'),
                                   'description' => t('Issue'),

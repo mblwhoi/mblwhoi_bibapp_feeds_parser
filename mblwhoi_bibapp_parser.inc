@@ -85,9 +85,9 @@ function parse_bibapp_works_rdf($xml){
     }
 
     // Add author list.
-    $work_data['authors'] = "";
+    $work_data['authors_list'] = "";
     if ($coins_data['rft.au']){
-      $work_data['authors'] = implode('; ', $coins_data['rft.au']);
+      $work_data['authors_list'] = implode('; ', $coins_data['rft.au']);
     }
 
 
