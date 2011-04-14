@@ -173,8 +173,10 @@ function parse_bibapp_works_rdf($xml){
                             'rft.btitle'
                             );
       foreach ($title_fields as $title_field){
+
         if (isset($parsed_item[$title_field])){
           $parsed_item['title'] = $parsed_item[$title_field];
+          break;
         }
         else{
           $parsed_item['title'] = 'Untitled';
