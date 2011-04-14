@@ -12,7 +12,7 @@ function mblwhoi_bibapp_feeds_parser_feeds_plugins() {
       'parent' => 'FeedsParser', // A plugin needs to derive either directly or indirectly from FeedsFetcher, FeedsParser or FeedsProcessor.
       'class' => 'BibAppWorksRdfParser',
       'file' => 'BibAppWorksRdfParser.inc',
-      'path' => drupal_get_path('module', 'mblwhoi_bibapp_parser'),
+      'path' => drupal_get_path('module', 'mblwhoi_bibapp_feeds_parser'),
     ),
   );
   return $info;
