@@ -120,7 +120,7 @@ function parse_bibapp_works_rdf($xml){
       }
 
       // Create SimpleXML document from rdf.
-      $author_doc = simplexml_load_string($author_rdf)
+      $author_doc = simplexml_load_string($author_rdf);
       if ($author_doc == false ){
 
         // Skip to next author.
