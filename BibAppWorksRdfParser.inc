@@ -40,7 +40,7 @@ class BibAppWorksRdfParser extends FeedsParser {
                                   ),
 
                  'rft.date' => array(
-                                  'name' => t('Publicatio nDate'),
+                                  'name' => t('Publication Date'),
                                   'description' => t('Publication Date'),
                                   ),
 
