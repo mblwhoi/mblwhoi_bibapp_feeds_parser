@@ -63,21 +63,21 @@ function parse_bibapp_works_rdf($xml){
 
     // Parse the work's COINS query string.
     $coins_query = $children['bibo']->coins;
-    
+
     $coins_data = proper_parse_str(htmlspecialchars_decode($coins_query));
 
     // Get simple coins fields.
     $simple_coins_fields = array(
                                  'rft.btitle',
                                  'rft.jtitle',
-                                 'rft.epage',
-                                 'rft.spage',
-                                 'rft.volume',
-                                 'rft.genre',
-                                 'rft.issn',
                                  'rft.atitle',
-                                 'rft.issue',
+                                 'rft.genre',
                                  'rft.date',
+                                 'rft.volume',
+                                 'rft.spage',
+                                 'rft.epage',
+                                 'rft.issn',
+                                 'rft.issue'
                                  );
 
     foreach ($simple_coins_fields as $field){
@@ -93,7 +93,7 @@ function parse_bibapp_works_rdf($xml){
 
     // For each linked author...
     foreach($linked_authors as $linked_author){
-      
+
       // Initialize a parsed item array to represent
       // the author-work pair.
       $parsed_item = array();
@@ -119,7 +119,7 @@ function parse_bibapp_works_rdf($xml){
 
       // Create SimpleXML document from rdf.
       if (! $author_doc = simplexml_load_string($author_rdf) ){
-        
+
         // Skip to next author.
         continue;
       }
@@ -132,7 +132,7 @@ function parse_bibapp_works_rdf($xml){
 
       // Get authorship description via XPath query.
       $author_description_array = $author_doc->xpath('rdf:Description');
-      
+
       // continue to next linked author
       // if we couldn't get the author description.
       if (! $author_description_array){
@@ -144,12 +144,12 @@ function parse_bibapp_works_rdf($xml){
 
         // Author description is the first and only element.
         $author_description = $author_description_array[0];
-        
+
         // Get author child items, keyed by namespace
         $author_children = array();
         foreach ($author_namespaces as $k => $v){
           $author_children[$k] = $author_description->children($v);
-        }      
+        }
 
         // Get author display name.
         $author_data['author_name'] =  (string) $author_children['foaf']->name;
@@ -158,14 +158,29 @@ function parse_bibapp_works_rdf($xml){
         $author_data['author_depiction'] =  (string) $author_children['foaf']->depiction;
 
       }
-      
+
 
       // Save the work_data and author data to the parsed_item.
       $parsed_item = array_merge($parsed_item, $work_data, $author_data);
 
+      // Set the item's title.
+      $title_fields = array(
+                            'rft.jtitle',
+                            'rft.atitle',
+                            'rft.btitle'
+                            );
+      foreach ($title_fields as $title_field){
+        if (isset($parsed_item[$title_field])){
+          $parsed_item['title'] = $parsed_item[$title_field];
+        }
+        else{
+          $parsed_item['title'] = 'Untitled';
+        }
+      }
+
       // Save the parsed item to the list of parsed items.
       $parsed_items[] = $parsed_item;
-      
+
     }
 
   }

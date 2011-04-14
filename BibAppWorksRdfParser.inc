@@ -28,50 +28,54 @@ class BibAppWorksRdfParser extends FeedsParser {
 
   public function getMappingSources() {
 
-    
-      $item['article_title'] = $title;
-      $item['article_url'] = $link;
-      $item['abstract'] = $description;
-      $item['image'] = $image;
-      $item['image_name'] = $image_name;
-      $item['source_title'] = $sourceTITLE;
-      $item['source_url'] = $sourceURL;
-
-
     return array(
-                 'article_title' => array(
-                                  'name' => t('Article Title'),
-                                  'description' => t('Article Title'),
-                                  ),
-                 'article_url' => array(
-                                  'name' => t('Article URL'),
-                                  'description' => t('Article URL'),
+                 'title' => array(
+                                  'name' => t('Title'),
+                                  'description' => t('Title'),
                                   ),
 
-                 'abstract' => array(
-                                  'name' => t('Abstract'),
-                                  'description' => t('Abstract'),
-                                 ),
+                 'rft.genre' => array(
+                                  'name' => t('Genre'),
+                                  'description' => t('Genre'),
+                                  ),
 
-                 'image_url' => array(
-                                  'name' => t('Image URL'),
-                                  'description' => t('Image URL'),
-                                 ),
+                 'rft.date' => array(
+                                  'name' => t('Publicatio nDate'),
+                                  'description' => t('Publication Date'),
+                                  ),
 
-                 'image_name' => array(
-                                  'name' => t('Image Name'),
-                                  'description' => t('Image Name'),
-                                 ),
+                 'rft.volume' => array(
+                                  'name' => t('Volume'),
+                                  'description' => t('Volume'),
+                                  ),
+                 'rft.issue' => array(
+                                  'name' => t('Issue'),
+                                  'description' => t('Issue'),
+                                  ),
 
-                 'journal_title' => array(
-                                  'name' => t('Journal Title'),
-                                  'description' => t('Journal Title'),
-                                 ),
+                 'rft.spage' => array(
+                                  'name' => t('Start Page'),
+                                  'description' => t('Start Page'),
+                                  ),
+                 'rft.epage' => array(
+                                  'name' => t('End Page'),
+                                  'description' => t('End Page'),
+                                  ),
 
-                 'journal_url' => array(
-                                  'name' => t('Journal URL'),
-                                  'description' => t('Journal URL'),
-                                 )
+                 'rft.issn' => array(
+                                  'name' => t('ISSN'),
+                                  'description' => t('ISSN'),
+                                  ),
+
+                 'author_name' => array(
+                                  'name' => t('Author Name'),
+                                  'description' => t('Author Name'),
+                                  ),
+
+                 'author_depiction' => array(
+                                  'name' => t('Author Depiction'),
+                                  'description' => t('Author Depiction'),
+                                  )
                  );
 
   }
