@@ -19,7 +19,8 @@ function parse_bibapp_works_rdf($xml){
 
   // Create simpleXML document from source xml string or
   // throw error.
-  if (! $doc = simplexml_load_string($xml) ){
+  $doc = simplexml_load_string($xml);
+  if ($doc == false){
     throw new Exception('Could not parse xml.');
   }
 
@@ -105,6 +106,7 @@ function parse_bibapp_works_rdf($xml){
       $author_uri = $linked_author->attributes($namespaces['rdf'])->resource;
 
       // Try to download the author's rdf.
+      $author_rdf = "";
       try{
         // use '@' to suppress warning.
         $author_rdf = @file_get_contents($author_uri . '?format=rdf');
@@ -118,7 +120,8 @@ function parse_bibapp_works_rdf($xml){
       }
 
       // Create SimpleXML document from rdf.
-      if (! $author_doc = simplexml_load_string($author_rdf) ){
+      $author_doc = simplexml_load_string($author_rdf)
+      if ($author_doc == false ){
 
         // Skip to next author.
         continue;
