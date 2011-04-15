@@ -88,6 +88,11 @@ class BibAppWorksRdfParser extends FeedsParser {
                                   'description' => t('Genre'),
                                   ),
 
+                 'rft.jtitle' => array(
+                                  'name' => t('Journal Title'),
+                                  'description' => t('Journal Title'),
+                                  ),
+
                  'rft.date' => array(
                                   'name' => t('Publication Date'),
                                   'description' => t('Publication Date'),
