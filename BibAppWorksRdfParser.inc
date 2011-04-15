@@ -73,6 +73,11 @@ class BibAppWorksRdfParser extends FeedsParser {
   public function getMappingSources() {
 
     return array(
+                 'work_uri' => array(
+                                  'name' => t('Work URI'),
+                                  'description' => t('Work URI'),
+                                  ),
+
                  'title' => array(
                                   'name' => t('Title'),
                                   'description' => t('Title'),
@@ -115,6 +120,11 @@ class BibAppWorksRdfParser extends FeedsParser {
                  'rft.issn' => array(
                                   'name' => t('ISSN'),
                                   'description' => t('ISSN'),
+                                  ),
+
+                 'author_uri' => array(
+                                  'name' => t('Author URI'),
+                                  'description' => t('Author URI'),
                                   ),
 
                  'author_name' => array(

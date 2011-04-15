@@ -59,12 +59,12 @@ function parse_bibapp_works_rdf($xml,$limit=0){
     $work_id = str_replace('#Authorship', '', $rdf_about);
 
     // Get the corresponding work element.
-    $w = array_shift($doc->xpath('rdf:Description[contains(@rdf:about,"' . $work_id . '")]'));
+    $work = array_shift($doc->xpath('rdf:Description[contains(@rdf:about,"' . $work_id . '")]'));
 
     // Save the linked authors array and work element to the list.
     $authors_work_pairs[] = array(
                              "linked_authors" => $linked_authors,
-                             "work" => $w
+                             "work" => $work,
                              );
   }
 
@@ -92,12 +92,11 @@ function parse_bibapp_works_rdf($xml,$limit=0){
     $linked_authors = $authors_work_pair['linked_authors'];
     $work = $authors_work_pair['work'];
 
-    // Get the works' BibApp creation time string.
-    $creation_time_element = array_shift($work->xpath('vitro:timekey'));
-    $creation_time_str = $creation_time_element[0];
-
     // Initialize an array to hold data about the work.
     $work_data = array();
+
+    // Add work's uri, taken from the 'about' attribute.
+    $work_data['work_uri'] = sprintf("%s", $work->attributes($namespaces['rdf'])->about);    
 
     // Get the work's child items, keyed by namespace.
     $children = array();
