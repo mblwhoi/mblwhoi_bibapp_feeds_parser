@@ -11,7 +11,7 @@
  * Returns an array of parsed items from a bibapp works rdf feed.
  */
 
-function parse_bibapp_works_rdf($xml,$limit=5){
+function parse_bibapp_works_rdf($xml,$limit=0){
 
   // Initialize list of parsed items.
   // Each item represents an author-work pairing.
@@ -78,6 +78,9 @@ function parse_bibapp_works_rdf($xml,$limit=5){
 
   // Then reverse the array.
   $authors_work_pairs = array_reverse($authors_work_pairs);
+
+  // Set the limit.
+  $limit = $limit ? $limit : count($authors_work_pairs);
 
   // Then only process the first $limit pairs.
   for ($i=0; $i < $limit; $i++){
