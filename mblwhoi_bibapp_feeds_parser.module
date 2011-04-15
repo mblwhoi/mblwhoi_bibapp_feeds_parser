@@ -20,7 +20,7 @@ function mblwhoi_bibapp_feeds_parser_feeds_plugins() {
     'name' => 'BibApp Node Processor',
     'description' => 'Creates nodes from processed BibApp Works Feed',
     'handler' => array(
-      'parent' => 'FeedsNodeParser', // A plugin needs to derive either directly or indirectly from FeedsFetcher, FeedsParser or FeedsProcessor.
+      'parent' => 'FeedsNodeProcessor', // A plugin needs to derive either directly or indirectly from FeedsFetcher, FeedsParser or FeedsProcessor.
       'class' => 'BibAppWorksRdfNodeProcessor',
       'file' => 'BibAppWorksRdfNodeProcessor.inc',
       'path' => drupal_get_path('module', 'mblwhoi_bibapp_feeds_parser'),
