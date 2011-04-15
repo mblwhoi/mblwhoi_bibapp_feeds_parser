@@ -20,8 +20,6 @@ class BibAppWorksRdfParser extends FeedsParser {
     // Parse it.
     $items = parse_bibapp_works_rdf($string);
 
-    watchdog('debug', "items is: " . var_dump($items,1));
-
     // Populate the FeedsImportBatch object with the parsed results.
     $batch->title = 'bibapp Feed';
     $batch->items = $items;
