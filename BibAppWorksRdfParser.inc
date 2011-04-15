@@ -1,5 +1,8 @@
 <?php
 
+// Load the parser library.
+require_once(drupal_get_path('module', 'mblwhoi_bibapp_feeds_parser') . '/mblwhoi_bibapp_parser.inc');
+
 /**
  * Parses BibApp Works RDF.
  */
@@ -9,10 +12,6 @@ class BibAppWorksRdfParser extends FeedsParser {
    * Parses a raw string and populates FeedsImportBatch object from it.
    */
   public function parse(FeedsImportBatch $batch, FeedsSource $source) {
-
-
-    // Load the parser library.
-    require_once(drupal_get_path('module', 'mblwhoi_bibapp_feeds_parser') . '/mblwhoi_bibapp_parser.inc');
 
     // Get the file's content.
     $string = $batch->getRaw();
