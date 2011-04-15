@@ -26,6 +26,51 @@ class BibAppWorksRdfParser extends FeedsParser {
   }
 
 
+  /**
+   * Override of getSourceElement.
+   * Our implementation downloads and parses author information if it has not already been parsed.
+   * We do this here to avoid memory/time limits.  The batch process should help us avoid those problems.
+   */
+  public function getSourceElement(FeedsImportBatch $batch, $element_key) {
+    if (($node = node_load($batch->feed_nid)) && $element_key == 'parent:uid') {
+      return $node->uid;
+    }
+
+    $item = $batch->currentItem();
+
+    // Define keys related to author information.
+    $author_info_keys = array(
+                              'author_name',
+                              'author_depiction'
+                              );
+
+    // If we are requesting author information...
+    if (in_array($element_key, $author_info_keys)){
+
+      // If we have not yet downloaded the author information...
+      if (! isset($item['author_info'])){
+
+        // Try to download it...
+        try {
+          $item['author_info'] = get_author_info($item['author_uri']);
+        }
+        catch (Exception $e){
+          // Set author info to an empty array.
+          $item['author_info'] = array();
+        }
+      }
+
+      // Return the key's value from the author_info.
+      return isset($item['author_info'][$element_key]) ? $item['author_info'][$element_key] : '';
+
+    }
+
+    // Otherwise return the value from the item.
+    return isset($item[$element_key]) ? $item[$element_key] : '';
+  }
+
+
+
   public function getMappingSources() {
 
     return array(
