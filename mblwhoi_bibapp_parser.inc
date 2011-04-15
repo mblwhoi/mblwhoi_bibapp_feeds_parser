@@ -146,7 +146,7 @@ function parse_bibapp_works_rdf($xml,$limit=0){
       $parsed_item = array_merge($parsed_item, $work_data);
 
       // Get the author's BibApp URI.
-      $author_uri = $linked_author->attributes($namespaces['rdf'])->resource;
+      $author_uri = array_shift($linked_author->attributes($namespaces['rdf'])->resource);
 
       // Save the author uri to the parsed_item.
       $parsed_item['author_uri'] = $author_uri;
