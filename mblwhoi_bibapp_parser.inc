@@ -150,7 +150,6 @@ function parse_bibapp_works_rdf($xml,$limit=5){
 
       // Set the item's title.
       $title_fields = array(
-                            'rft.jtitle',
                             'rft.atitle',
                             'rft.btitle'
                             );
