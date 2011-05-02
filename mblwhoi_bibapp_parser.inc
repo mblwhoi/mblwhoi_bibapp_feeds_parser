@@ -161,7 +161,7 @@ function parse_bibapp_works_rdf($xml,$limit=0){
       $author_uri = sprintf("%s", $linked_author->attributes($namespaces['rdf'])->resource);
 
       // Save the author uri to the list of linked author uris.
-      $linked_author_uris = $author_uri;
+      $linked_author_uris[] = $author_uri;
 
     }
 
