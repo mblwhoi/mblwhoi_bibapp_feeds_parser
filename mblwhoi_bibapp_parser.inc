@@ -14,7 +14,7 @@
 function parse_bibapp_works_rdf($xml,$limit=0){
 
   // Initialize list of parsed items.
-  // Each item represents an author-work pairing.
+  // Each item represents a work pair.
   $parsed_items = array();
 
   // Create simpleXML document from source xml string or
@@ -134,43 +134,42 @@ function parse_bibapp_works_rdf($xml,$limit=0){
     }
 
 
+    // Set the item's title.
+    $title_fields = array(
+                          'rft.atitle',
+                          'rft.btitle'
+                          );
+    foreach ($title_fields as $title_field){
+
+      if (isset($parsed_item[$title_field])){
+        $parsed_item['title'] = $parsed_item[$title_field];
+        break;
+      }
+      else{
+        $parsed_item['title'] = 'Untitled';
+      }
+    }
+
+
+    // Initialize a list of linked author uris.
+    $linked_author_uris = array();
+
     // For each linked author...
     foreach($linked_authors as $linked_author){
-
-      // Initialize a parsed item array to represent
-      // the author-work pair.
-      $parsed_item = array();
-
-      // Save the work_data to the parsed_item.
-      $parsed_item = array_merge($parsed_item, $work_data);
 
       // Get the author's BibApp URI.
       $author_uri = sprintf("%s", $linked_author->attributes($namespaces['rdf'])->resource);
 
-      // Save the author uri to the parsed_item.
-      $parsed_item['author_uri'] = $author_uri;
-
-      // Set the item's title.
-      $title_fields = array(
-                            'rft.atitle',
-                            'rft.btitle'
-                            );
-      foreach ($title_fields as $title_field){
-
-        if (isset($parsed_item[$title_field])){
-          $parsed_item['title'] = $parsed_item[$title_field];
-          break;
-        }
-        else{
-          $parsed_item['title'] = 'Untitled';
-        }
-      }
-
-      // Save the parsed item to the list of parsed items.
-      $parsed_items[] = $parsed_item;
+      // Save the author uri to the list of linked author uris.
+      $linked_author_uris = $author_uri;
 
     }
 
+    // Save the linked author uris to the work.
+    $work_data['linked_author_uris'] = $linked_author_uris;
+
+    // Save the work_data to the list of parsed items.
+    $parsed_items[] = $work_data;
   }
 
   // Return the parsed items.
