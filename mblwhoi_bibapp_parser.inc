@@ -141,12 +141,12 @@ function parse_bibapp_works_rdf($xml,$limit=0){
                           );
     foreach ($title_fields as $title_field){
 
-      if (isset($parsed_item[$title_field])){
-        $parsed_item['title'] = $parsed_item[$title_field];
+      if (isset($work_data[$title_field])){
+        $work_data['title'] = $work_data[$title_field];
         break;
       }
       else{
-        $parsed_item['title'] = 'Untitled';
+        $work_data['title'] = 'Untitled';
       }
     }
 
