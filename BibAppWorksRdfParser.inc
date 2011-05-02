@@ -37,30 +37,34 @@ class BibAppWorksRdfParser extends FeedsParser {
 
     $item = $batch->currentItem();
 
-    // Define keys related to author information.
-    $author_info_keys = array(
-                              'author_name',
-                              'author_depiction'
-                              );
-
-    // If we are requesting author information...
-    if (in_array($element_key, $author_info_keys)){
+    // If we are requesting linked author information...
+    if ($element_key == 'linked_authors_json'){
 
       // If we have not yet downloaded the author information...
-      if (! isset($item['author_info'])){
+      if (! isset($item['linked_authors_json'])){
 
-        // Try to download it...
-        try {
-          $item['author_info'] = get_author_info($item['author_uri']);
+        // Initialize a list of linked author info objects.
+        $linked_author_infos = array();
+
+        // For each linked author uri...
+        foreach ($item['linked_author_uris'] as $linked_author_uri){
+
+          // Try to download the author info.
+          try {
+            $linked_author_infos[] = get_author_info($linked_author_uri);
+          }
+          catch (Exception $e){
+            // Do nothing.
+          }
         }
-        catch (Exception $e){
-          // Set author info to an empty array.
-          $item['author_info'] = array();
-        }
+
+        // Create a json string representing the linked author infos.
+        $item['linked_authors_json'] = json_encode($linked_author_infos);
+
       }
 
-      // Return the key's value from the author_info.
-      return isset($item['author_info'][$element_key]) ? $item['author_info'][$element_key] : '';
+      // Return the linked_authors_json.
+      return $item['linked_authors_json'];
 
     }
 
@@ -127,20 +131,10 @@ class BibAppWorksRdfParser extends FeedsParser {
                                   'description' => t('ISSN'),
                                   ),
 
-                 'author_uri' => array(
-                                  'name' => t('Author URI'),
-                                  'description' => t('Author URI'),
+                 'linked_authors_json' => array(
+                                  'name' => t('Linked Authors JSON'),
+                                  'description' => t('Linked Authors JSON'),
                                   ),
-
-                 'author_name' => array(
-                                  'name' => t('Author Name'),
-                                  'description' => t('Author Name'),
-                                  ),
-
-                 'author_depiction' => array(
-                                  'name' => t('Author Depiction'),
-                                  'description' => t('Author Depiction'),
-                                  )
                  );
 
   }
